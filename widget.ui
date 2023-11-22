@@ -112,9 +112,9 @@
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>300</y>
+     <y>320</y>
      <width>221</width>
-     <height>51</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -163,9 +163,9 @@
   <widget class="QLabel" name="labelDuration">
    <property name="geometry">
     <rect>
-     <x>700</x>
+     <x>690</x>
      <y>260</y>
-     <width>71</width>
+     <width>101</width>
      <height>21</height>
     </rect>
    </property>
@@ -197,6 +197,29 @@
    </property>
    <property name="text">
     <string>1x</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonMute">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>330</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Mute</string>
+   </property>
+  </widget>
+  <widget class="QTableView" name="tableViewPlaylist">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>741</width>
+     <height>192</height>
+    </rect>
    </property>
   </widget>
  </widget>
