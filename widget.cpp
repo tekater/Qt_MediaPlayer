@@ -25,7 +25,7 @@ Widget::Widget(QWidget *parent) // Конструктор
 
     //                  Player Init
     m_player = new QMediaPlayer(this);                                                          // Передаём родителя
-    m_player->setVolume(40);                                                                    // Громкость
+    m_player->setVolume(10);                                                                    // Громкость
     ui->labelVolume->setText(QString("Volume: ").append(QString::number(m_player->volume())));  // Передача в LabelVolume
     ui->horizontalSliderVolume->setValue(m_player->volume());                                   // Передача в SliderVolume
 
@@ -186,5 +186,41 @@ void Widget::on_pushButtonPrev_clicked()
 void Widget::on_pushButtonNext_clicked()
 {
     m_playlist->next();     //      Следующий
+}
+
+
+void Widget::on_tableViewPlaylist_doubleClicked(const QModelIndex &index)
+{
+    m_playlist->setCurrentIndex(index.row());
+    m_player->play();
+}
+
+
+void Widget::on_pushButtonClear_clicked()
+{
+    m_playlist_model->clear();
+    m_playlist->clear();
+}
+
+
+void Widget::on_pushButtonDelete_clicked()
+{
+    /*
+    QModelIndex index = ui->tableViewPlaylist->
+    m_playlist_model->removeRow(1,);
+    m_playlist->removeMedia(index);
+    */
+}
+
+
+void Widget::on_pushButtonLoop_clicked()
+{
+
+}
+
+
+void Widget::on_pushButtonMix_clicked()
+{
+
 }
 

@@ -48,6 +48,16 @@ private slots:
 
     void on_pushButtonNext_clicked();
 
+    void on_tableViewPlaylist_doubleClicked(const QModelIndex &index);
+
+    void on_pushButtonClear_clicked();
+
+    void on_pushButtonDelete_clicked();
+
+    void on_pushButtonLoop_clicked();
+
+    void on_pushButtonMix_clicked();
+
 private:
     Ui::Widget *ui;
 
