@@ -66,7 +66,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabelComposition</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;TextLabelComposition&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButtonOpen">
@@ -248,30 +248,30 @@
     <string>Del</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButtonLoop">
+  <widget class="QCheckBox" name="checkBoxLoop">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>340</y>
-     <width>80</width>
-     <height>21</height>
+     <x>220</x>
+     <y>320</y>
+     <width>72</width>
+     <height>19</height>
     </rect>
    </property>
    <property name="text">
     <string>Loop</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButtonMix">
+  <widget class="QCheckBox" name="checkBoxShuffle">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>220</x>
      <y>340</y>
-     <width>80</width>
-     <height>21</height>
+     <width>72</width>
+     <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>Mix</string>
+    <string>Shuffle</string>
    </property>
   </widget>
  </widget>
