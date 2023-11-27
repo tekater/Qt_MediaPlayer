@@ -12,7 +12,7 @@ Widget::Widget(QWidget *parent) // Конструктор
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
+    this->setFixedSize(size()); // Фиксированный размер окна
     muted = false;
 
     //                 Button style:
@@ -30,6 +30,7 @@ Widget::Widget(QWidget *parent) // Конструктор
     m_player->setVolume(10);                                                                    // Громкость
     ui->labelVolume->setText(QString("Volume: ").append(QString::number(m_player->volume())));  // Передача в LabelVolume
     ui->horizontalSliderVolume->setValue(m_player->volume());                                   // Передача в SliderVolume
+    ui->tableViewPlaylist->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     connect(m_player,&QMediaPlayer::positionChanged,this,&Widget::on_position_changed);
     connect(m_player,&QMediaPlayer::durationChanged,this,&Widget::on_duration_changed);
@@ -64,7 +65,7 @@ Widget::Widget(QWidget *parent) // Конструктор
     }
             );
 /*
-    connect(ui->pushButtonDelete,&QToolButton::click,
+    connect(ui->pushButtonDelete,&QToolButton::clicked,
             [this]()
     {
         QItemSelectionModel* selection = ui->tableViewPlaylist->selectionModel();
@@ -269,7 +270,7 @@ void Widget::on_pushButtonPrev_clicked()
 
 void Widget::on_pushButtonNext_clicked()
 {
-    m_playlist->next();     //      Следующий
+    m_playlist->next();         //      Следующий
 }
 
 
@@ -288,7 +289,15 @@ void Widget::on_pushButtonClear_clicked() // Clear
 
 void Widget::on_pushButtonDelete_clicked() // Delete
 {
-
+    QItemSelectionModel* selection = ui->tableViewPlaylist->selectionModel();
+    QModelIndexList rows = selection->selectedRows();
+    for(QModelIndexList::iterator it = rows.begin();it != rows.end();++it)
+    {
+        if(m_playlist->removeMedia((it->row())))
+        {
+            m_playlist_model->removeRows(it->row(),1);
+        }
+    }
 }
 
 
