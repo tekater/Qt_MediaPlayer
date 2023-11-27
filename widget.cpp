@@ -6,6 +6,7 @@
 #include <QDir>
 #include <Qtime>
 #include <QToolButton>
+#include <QMessageBox>
 
 Widget::Widget(QWidget *parent) // Конструктор
     : QWidget(parent)
@@ -127,6 +128,7 @@ void Widget::load_playlist(QString filename)
 
 }
 
+
 void Widget::save_playlist(QString filename)
 {
     // Clear file
@@ -139,6 +141,55 @@ void Widget::save_playlist(QString filename)
     m_playlist->save(QUrl::fromLocalFile(filename),format.toStdString().c_str());
 }
 
+void Widget::load_cue_playlist(QString filename)
+{
+    QString performer;
+    QString flac_file;
+    QFile file(filename);
+
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+
+    while(!file.atEnd())
+    {
+        QString buffer(file.readLine());
+        //QMessageBox mb(QMessageBox::Icon::Information,"Info",buffer,QMessageBox::Ok,this);
+        //mb.show();
+        if(buffer.split(' ')[0] == "PERFOMER")
+        {
+            performer = buffer.remove(0,strlen("PERFORMER")+1);
+
+            QMessageBox mb(QMessageBox::Icon::Information,"Info",performer,QMessageBox::Ok,this);
+
+            qDebug() << buffer << "\n";
+            qDebug() << performer << "\n";
+        }
+        if(buffer.split(' ')[0] == "FILE")
+        {
+            //flac_file = buffer.remove(0,strlen("FILE")+2);
+            flac_file = buffer.remove("FILE \"").remove("\" WAVE\n");
+
+            QDir dir = QFileInfo(file).absoluteDir();
+
+            QString path = dir.absolutePath();
+            QString full_name = path + "/" + flac_file;
+
+            qDebug() << full_name << "\n";
+            qDebug() << flac_file << "\n";
+
+            QList<QStandardItem*> items;
+
+            items.append(new QStandardItem(dir.dirName()));
+            items.append(new QStandardItem(full_name));
+
+            m_playlist_model->appendRow(items);
+            m_playlist->addMedia(QUrl(full_name));
+        }
+    }
+    file.close();
+}
 
 void Widget::on_pushButtonOpen_clicked()
 {
@@ -161,17 +212,32 @@ void Widget::on_pushButtonOpen_clicked()
                 this,
                 "Open files",
                 "C:\\ItProjects\\Qt\\MediaPlayer2\\music",
-                "Audio files (*.mp3 *.flac)"
+                "Audio files (*.mp3 *.flac);;MP-3 (*.mp3);;Flac (*.flac);;Playlists (*.m3u *.cue);;M3U (*.m3u);;CUE (*.cue)"
                 );
-    for(QString filesPath: files)
+
+    if(files.size()>1)
     {
-        QList<QStandardItem*> items;
+        for(QString filesPath: files)
+        {
+            QList<QStandardItem*> items;
 
-        items.append(new QStandardItem(QDir(filesPath).dirName()));
-        items.append(new QStandardItem(filesPath));
+            items.append(new QStandardItem(QDir(filesPath).dirName()));
+            items.append(new QStandardItem(filesPath));
 
-        m_playlist_model->appendRow(items);
-        m_playlist->addMedia(QUrl(filesPath));
+            m_playlist_model->appendRow(items);
+            m_playlist->addMedia(QUrl(filesPath));
+        }
+    }
+    else
+    {
+        if(files.last().split('.').last() == "m3u")
+        {
+            load_playlist(files.last());
+        }
+        if(files.last().split('.').last() == "cue")
+        {
+            load_cue_playlist(files.last());
+        }
     }
 }
 
@@ -233,7 +299,7 @@ void Widget::on_duration_changed(qint64 duration)
 {
     ui->horizontalSliderProgress->setMaximum(duration);
     QTime qt_duration = QTime::fromMSecsSinceStartOfDay(duration);
-    ui->labelDuration->setText(QString("Duration: ").append(qt_duration.toString("mm:ss")));
+    ui->labelDuration->setText(QString("Duration: ").append(qt_duration.toString("hh:mm:ss")));
 }
 
 void Widget::on_pushButtonAudioSpeed1_clicked()
