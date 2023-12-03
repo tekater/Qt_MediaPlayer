@@ -6,6 +6,8 @@
 #include <QMediaPlaylist>
 #include <QStandardItemModel>
 
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -17,7 +19,6 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-
     void load_playlist(QString filename);
     void save_playlist(QString filename);
 
@@ -62,6 +63,7 @@ private slots:
     void on_checkBoxShuffle_stateChanged(int arg1);
 
     void on_pushButtonDelete_clicked();
+
 
 private:
     Ui::Widget *ui;

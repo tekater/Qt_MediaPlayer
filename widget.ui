@@ -217,7 +217,7 @@
     <rect>
      <x>20</x>
      <y>60</y>
-     <width>741</width>
+     <width>371</width>
      <height>192</height>
     </rect>
    </property>
@@ -272,6 +272,22 @@
    </property>
    <property name="text">
     <string>Shuffle</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frameEqualizer">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>60</y>
+     <width>381</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
   </widget>
  </widget>

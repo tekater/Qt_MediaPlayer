@@ -12,9 +12,10 @@ SOURCES += \
     main.cpp \
     widget.cpp
 
+
 HEADERS += \
     widget.h
-
+    bass.h
 FORMS += \
     widget.ui
 
